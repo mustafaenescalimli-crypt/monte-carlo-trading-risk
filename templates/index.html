@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+    <title>Monte Carlo Simülasyonu</title>
+</head>
+<body>
+    <h1>Monte Carlo Trading Risk Simülasyonu</h1>
+    <form method="POST">
+        Win Rate (%)<br><input name="wr" required><br>
+        Ortalama R:R<br><input name="rr" required><br>
+        İşlem Sayısı<br><input name="n_trades" required><br>
+        Simülasyon Sayısı<br><input name="n_sim" required><br>
+        Max Drawdown Limiti (%)<br><input name="max_dd_limit" required><br><br>
+        <button type="submit">Simülasyonu Çalıştır</button>
+    </form>
+
+    {% if result %}
+        <h2>Sonuçlar</h2>
+        <p>%95 worst case max DD: {{ result.perc95_max_dd | round(2) }} R</p>
+        <p>En kötü senaryo max DD: {{ result.max_dd_max | round(2) }} R</p>
+        <p>Önerilen işlem başı risk (%95 worst case): {{ result.risk_suggestion | round(2) }}%</p>
+        <p>En kötü senaryoya göre risk: {{ result.risk_suggestion_worst | round(4) }}%</p>
+
+        <img src="data:image/png;base64,{{ plot_url }}">
+    {% endif %}
+</body>
+</html>
